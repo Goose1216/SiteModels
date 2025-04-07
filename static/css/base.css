@@ -1,0 +1,163 @@
+:root {
+    --primary-color: #2A2A2A;
+    --secondary-color: #3D3D3D;
+    --accent-color: #00BCD4;
+    --text-color: #FFFFFF;
+    --hover-color: #0097A7;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-header {
+    background-color: var(--secondary-color);
+    padding: 1rem 2rem;
+    box-shadow: var(--box-shadow);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo a {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.button {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.button.primary {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.button.primary:hover {
+    background-color: var(--hover-color);
+}
+
+.button {
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+.button:hover {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.content {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.main-footer {
+    background-color: var(--secondary-color);
+    margin-top: auto;
+    padding: 2rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+.footer-section {
+    flex: 1;
+}
+
+.footer-section h4 {
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.footer-section a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.footer-section a:hover {
+    color: var(--accent-color);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+}

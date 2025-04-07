@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}3D Models Hub{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/base.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href=#>3DModelsHub</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Главная</a></li>
+                <li><a href="{% url 'models_list' %}">Модели</a></li>
+                <li><a href="#">Загрузить</a></li>
+            </ul>
+            <div class="auth-buttons">
+                {% if user.is_authenticated %}
+                    <div class="user-menu">
+                        <span>Привет, {{ user.username }}</span>
+                        <a href="#" class="button">Выйти</a>
+                    </div>
+                {% else %}
+                    <a href="#" class="button">Войти</a>
+                    <a href="#" class="button primary">Регистрация</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>О нас</h4>
+                <p>Платформа для публикации и обмена 3D моделями</p>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <p>Email: support@3dmodelshub.com</p>
+            </div>
+            <div class="footer-section">
+                <h4>Правила</h4>
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Условия использования</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 3DModelsHub. Все права защищены</p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
