@@ -1,11 +1,11 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import AnonymousUser
 
 
 class Model(models.Model):
-    file = models.FileField(upload_to='models_upload/', verbose_name='Файл')
-    name = models.TextField(max_length=100, verbose_name='Название', blank=True, null=True),
+    file = models.FileField(upload_to='models_upload/models', verbose_name='Файл')
+    image = models.ImageField(upload_to='models_upload/images', verbose_name='Изображение', blank=True, null=True)
+    name = models.TextField(max_length=30, verbose_name='Название', blank=True, null=True)
     description = models.TextField(max_length=500, verbose_name='Описание', blank=True, null=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор')
     cnt_downloads = models.IntegerField(default=0, verbose_name='Количество загрузок')

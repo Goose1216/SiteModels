@@ -18,137 +18,21 @@
         <h1 class="gallery-title">3D Model Gallery</h1>
 
         <div class="model-grid">
-            {% for model in models %}
-            <div class="model-card" id="model-{{ model.id }}">
-                <div class="loading">Loading model...</div>
-            </div>
+            {% for model in object_list  %}
+            <a href = '{% url 'models_detail' model.id %}'>
+                <div class="model-card" id="model-{{ model.id }}">
+                    {% if model.image %}
+                        <img src="{{ model.image.url }}" alt="{{ model.name }}" class="model-preview-image">
+                    {% else %}
+                        <div class="no-image-placeholder">No preview available</div>
+                    {% endif %}
+                    <div class="model-info">
+                        <span>{{ model.name }}</span>
+                    </div>
+                </div>
+            </a>
             {% endfor %}
         </div>
     </div>
 
-    <script>
-        function initGLBViewer(containerId, modelUrl, modelName) {
-            const container = document.getElementById(containerId);
-            const width = container.clientWidth;
-            const height = container.clientHeight;
-
-            container.innerHTML = '';
-
-            // 1. Сцена
-            const scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x1a1a1a);
-
-            // 2. Камера
-            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-            camera.position.set(0, 0, 5);
-
-            // 3. Рендерер
-            const renderer = new THREE.WebGLRenderer({
-                antialias: true,
-                powerPreference: "high-performance"
-            });
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(width, height);
-            renderer.shadowMap.enabled = true;
-            container.appendChild(renderer.domElement);
-
-            // 4. Освещение
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-            scene.add(ambientLight);
-
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
-
-            // 5. Управление
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-
-            // 6. Сетка
-            const gridHelper = new THREE.GridHelper(10, 10);
-            scene.add(gridHelper);
-
-            // 7. Загрузка модели
-            const loader = new THREE.GLTFLoader();
-            const dracoLoader = new THREE.DRACOLoader();
-            dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-            loader.setDRACOLoader(dracoLoader);
-
-            loader.load(
-                modelUrl,
-                function(gltf) {
-                    const model = gltf.scene;
-                    const box = new THREE.Box3().setFromObject(model);
-                    const center = box.getCenter(new THREE.Vector3());
-                    const size = box.getSize(new THREE.Vector3()).length();
-
-                    const modelGroup = new THREE.Group();
-                    model.position.sub(center);
-                    modelGroup.add(model);
-
-                    const targetSize = 5;
-                    const scale = targetSize / size;
-                    modelGroup.scale.set(scale, scale, scale);
-                    scene.add(modelGroup);
-
-                    const newBox = new THREE.Box3().setFromObject(modelGroup);
-                    const newSize = newBox.getSize(new THREE.Vector3());
-                    const maxDim = Math.max(newSize.x, newSize.y, newSize.z);
-                    const fov = camera.fov * (Math.PI / 180);
-                    let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
-
-                    camera.position.z = cameraZ;
-                    camera.position.x += 6;
-                    camera.position.y += 4;
-                    controls.update();
-
-                    model.traverse(child => {
-                        if (child.isMesh) {
-                            child.castShadow = true;
-                            child.receiveShadow = true;
-                        }
-                    });
-
-                    const infoDiv = document.createElement('div');
-                    infoDiv.className = 'model-info';
-                    infoDiv.textContent = modelName;
-                    container.appendChild(infoDiv);
-                },
-                function(xhr) {
-                    console.log(`${(xhr.loaded / xhr.total * 100).toFixed(1)}% loaded`);
-                },
-                function(error) {
-                    console.error('Error loading model:', error);
-                    container.innerHTML = `<div class="error">Error loading: ${modelName}</div>`;
-                }
-            );
-
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            window.addEventListener('resize', function() {
-                const newWidth = container.clientWidth;
-                const newHeight = container.clientHeight;
-
-                camera.aspect = newWidth / newHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(newWidth, newHeight);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            {% for model in models %}
-            initGLBViewer(
-                'model-{{ model.id }}',
-                '{{ model.file.url }}',
-                '{{ model.file.name|escapejs }}'
-            );
-            {% endfor %}
-        });
-    </script>
 {% endblock %}

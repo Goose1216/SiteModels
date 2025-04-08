@@ -1,18 +1,15 @@
-from django.shortcuts import render
-from .models import Model  # Импортируем вашу модель Model
+from .models import Model
+from django.views.generic import ListView, DetailView
 
 
-def model_list(request):
-    """
-    View для отображения списка всех 3D-моделей.
-    """
-    # Получаем все модели из базы данных
-    models = Model.objects.all()
+class ModelList(ListView):
+   #paginate_by = 12
+    model = Model
+    template_name = 'models/model_list.html'
+    queryset = Model.objects.all()
 
-    # Передаем их в контекст шаблона
-    context = {
-        'models': models,
-    }
 
-    # Рендерим шаблон с контекстом
-    return render(request, 'models/model_list.html', context)
+class ModelDetail(DetailView):
+    model = Model
+    template_name = 'models/model_detail.html'
+    queryset = Model.objects.all()
