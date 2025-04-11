@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'allauth',
+    'allauth.account',
+    'crispy_forms',
+    'crispy_bootstrap5',
+
     'users',
     'models',
 ]
@@ -129,16 +134,11 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# LOGIN_REDIRECT_URL = 'home'
-# LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'models_list'
+LOGOUT_REDIRECT_URL = 'models_list'
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+#Crispy_bootstrap
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
-CORS_ALLOW_ALL_ORIGINS = True
-
-# Или лучше настроить правильно:
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-]
+#Email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

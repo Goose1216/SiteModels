@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Вход в аккаунт{% endblock %}
+
+
+{% block content %}
+<h2>Авторизация</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <p><span class = 'text-muted'>Забыл пароль? <a href="{% url 'account_reset_password' %}"> Восстанови его</a></span></p>
+    <button class = 'btn btn-success' type="submit">Войти</button>
+</form>
+{% endblock %}
