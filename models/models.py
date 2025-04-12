@@ -9,13 +9,20 @@ class Model(models.Model):
     description = models.TextField(max_length=500, verbose_name='Описание', blank=True, null=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор')
     cnt_downloads = models.IntegerField(default=0, verbose_name='Количество загрузок')
-    cnt_likes = models.IntegerField(default=0, verbose_name='Количество лайков')
 
     def __str__(self):
         return f"Модель {self.name} от {self.author}"
 
     def get_absolute_url(self):
         pass
+
+    def increment_downloads(self):
+        self.cnt_downloads += 1
+        self.save()
+
+    @property
+    def cnt_likes(self):
+        return self.likes.count()
 
 
 class Comment(models.Model):
@@ -27,7 +34,8 @@ class Comment(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=False,
-        verbose_name = "Автор"
+        verbose_name = "Автор",
+        related_name = 'comments',
     )
 
     def __str__(self):
@@ -43,7 +51,8 @@ class Like(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=False,
-        verbose_name = "Автор"
+        verbose_name = "Автор",
+        related_name = 'likes',
     )
 
     def __str__(self):

@@ -1,10 +1,10 @@
 :root {
-    --primary-color: #2A2A2A;
-    --secondary-color: #3D3D3D;
-    --accent-color: #00BCD4;
-    --text-color: #FFFFFF;
-    --hover-color: #0097A7;
-    --border-radius: 8px;
+    --primary-color: #2A2A2A !important;
+    --secondary-color: #3D3D3D !important;
+    --accent-color: #00BCD4 !important;
+    --text-color: #FFFFFF !important;
+    --hover-color: #0097A7 !important;
+    --border-radius: 8px !important;
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --light-gray: #e0e0e0;
     --dark-gray: #555;

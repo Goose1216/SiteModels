@@ -16,7 +16,6 @@
 {% block content %}
 <div class="model-detail-container">
     <div class="model-media-container">
-        <!-- Слайдер для изображения и 3D модели -->
         <div class="model-slider">
             <div class="slider-item active">
                 {% if model.image %}
@@ -39,13 +38,23 @@
         <div class="model-header">
             <h1 class="model-title">{{ model.name }}</h1>
             <div class="model-stats">
-                <span class="stat-item"><i class="icon-download"></i> {{ model.cnt_downloads }}</span>
-                <span class="stat-item"><i class="icon-like"></i> {{ model.cnt_likes }}</span>
+                <span class="stat-item"><i class="icon-download"></i> Скачиваний {{ model.cnt_downloads }}</span>
+                <span class="stat-item"><i class="icon-like"></i> Лайков {{ model.cnt_likes }}</span>
                 {% if user.is_authenticated %}
-                    {% if user in model.likes.all %}
-                        <button class="like-btn" data-model-id="{{ model.id }}">Unlike</button>
+                    {% if liked %}
+                        <form method="post" action="{% url 'delete_like' model.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="like-btn">
+                                Unlike
+                            </button>
+                        </form>
                     {% else %}
-                        <button class="like-btn" data-model-id="{{ model.id }}">Like</button>
+                        <form method="post" action="{% url 'add_like' model.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="like-btn">
+                                Like
+                            </button>
+                        </form>
                     {% endif %}
                 {% endif %}
             </div>
@@ -62,25 +71,26 @@
         </div>
 
         <div class="model-actions">
-            <a href="{{ model.file.url }}" download class="download-btn">
+            <a href="{{ model.file.url }}" download class="download-btn" onclick="incrementDownloads()">
                 Скачать ({{ model.file.size|filesizeformat }})
             </a>
         </div>
 
-        <div class="model-tags">
-            <!-- Здесь могут быть теги модели -->
-        </div>
     </div>
 
     <div class="comments-section">
         <h2>Комментарии ({{ model.comments.count }})</h2>
 
         {% if user.is_authenticated %}
-        <form class="comment-form" method="post" action="#">
-            {% csrf_token %}
-            <textarea name="comment" placeholder="Добавить комментарий..." required></textarea>
-            <button type="submit" class="submit-comment-btn">Отправить</button>
-        </form>
+            {% if commented %}
+                 <div class="no-comments">Вы уже комментирвоали эту запись</div>
+            {% else %}
+                <form class="comment-form" method="post" action="{% url 'toggle_comment' model.pk %}">
+                    {% csrf_token %}
+                    <textarea name="comment" placeholder="Добавить комментарий..." required></textarea>
+                    <button type="submit" class="submit-comment-btn">Отправить</button>
+                </form>
+            {% endif %}
         {% endif %}
 
         <div class="comments-list">
@@ -100,6 +110,15 @@
 </div>
 
 <script>
+    function incrementDownloads() {
+        fetch("{% url 'increment_downloads' model.id %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            }
+        });
+    }
+
     // Инициализация 3D просмотрщика
     function initModelViewer() {
         const container = document.getElementById('model-viewer');

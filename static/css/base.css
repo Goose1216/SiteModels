@@ -1,9 +1,9 @@
 :root {
-    --primary-color: #2A2A2A;
-    --secondary-color: #3D3D3D;
-    --accent-color: #00BCD4;
-    --text-color: #FFFFFF;
-    --hover-color: #0097A7;
+    --primary-color: #2A2A2A !important;
+    --secondary-color: #3D3D3D !important;
+    --accent-color: #00BCD4 !important;
+    --text-color: #FFFFFF !important;
+    --hover-color: #0097A7 !important;
     --border-radius: 8px;
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -16,15 +16,15 @@
 }
 
 body {
-    background-color: var(--primary-color);
-    color: var(--text-color);
+    background-color: var(--primary-color) !important;
+    color: var(--text-color) !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .main-header {
-    background-color: var(--secondary-color);
+    background-color: var(--secondary-color) !important;
     padding: 1rem 2rem;
     box-shadow: var(--box-shadow);
 }
@@ -40,7 +40,7 @@ body {
 .logo a {
     font-size: 1.8rem;
     font-weight: bold;
-    color: var(--accent-color);
+    color: var(--accent-color) !important;
     text-decoration: none;
 }
 
@@ -51,13 +51,13 @@ body {
 }
 
 .nav-links a {
-    color: var(--text-color);
+    color: var(--text-color) !important;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: var(--accent-color);
+    color: var(--accent-color) !important;
 }
 
 .auth-buttons {
@@ -73,8 +73,8 @@ body {
 }
 
 .button.primary {
-    background-color: var(--accent-color);
-    color: var(--text-color);
+    background-color: var(--accent-color) !important;
+    color: var(--text-color) !important;
 }
 
 .button.primary:hover {
