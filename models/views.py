@@ -19,7 +19,7 @@ class ModelUploadView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 class ModelList(ListView):
-   #paginate_by = 12
+    paginate_by = 9
     model = Model
     template_name = 'models/model_list.html'
     queryset = Model.objects.all()

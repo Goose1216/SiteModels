@@ -11,12 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/DRACOLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 {% endblock %}
 
 {% block content %}
     <div class="model-gallery-container">
-        <h1 class="gallery-title">3D Model Gallery</h1>
-
+        <h1 class="gallery-title">3D Модели</h1>
         <div class="model-grid">
             {% for model in object_list  %}
             <a href = '{% url 'models_detail' model.id %}'>
@@ -32,7 +32,45 @@
                 </div>
             </a>
             {% endfor %}
+
         </div>
+     <div class="pagination-container">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?sort={{ sort }}&page=1" class="pagination-button first-page" title="First Page">
+                <i class="fas fa-angle-double-left"></i>
+            </a>
+            <a href="?sort={{ sort }}&page={{ page_obj.previous_page_number }}" class="pagination-button prev-page" title="Previous">
+                <i class="fas fa-angle-left"></i>
+            </a>
+        {% else %}
+            <span class="pagination-button disabled"><i class="fas fa-angle-double-left"></i></span>
+            <span class="pagination-button disabled"><i class="fas fa-angle-left"></i></span>
+        {% endif %}
+
+        <div class="page-numbers">
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <span class="pagination-button current-page">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?sort={{ sort }}&page={{ num }}" class="pagination-button">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if page_obj.has_next %}
+            <a href="?sort={{ sort }}&page={{ page_obj.next_page_number }}" class="pagination-button next-page" title="Next">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            <a href="?sort={{ sort }}&page={{ page_obj.paginator.num_pages }}" class="pagination-button last-page" title="Last Page">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+        {% else %}
+            <span class="pagination-button disabled"><i class="fas fa-angle-right"></i></span>
+            <span class="pagination-button disabled"><i class="fas fa-angle-double-right"></i></span>
+        {% endif %}
+    </div>
+</div>
     </div>
 
 {% endblock %}
