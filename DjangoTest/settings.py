@@ -136,6 +136,7 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'models_list'
 LOGOUT_REDIRECT_URL = 'models_list'
+LOGIN_URL = 'account_login'
 
 #Crispy_bootstrap
 CRISPY_TEMPLATE_PACK = 'bootstrap5'

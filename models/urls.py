@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import ModelList, ModelDetail, increment_downloads, add_like,delete_like, toggle_comment
+from .views import ModelUploadView, ModelList, ModelDetail, increment_downloads, add_like,delete_like, toggle_comment
 
 urlpatterns = [
     path('', ModelList.as_view(), name='models_list'),
+    path('upload/', ModelUploadView.as_view(), name='models_upload'),
     path('<int:pk>', ModelDetail.as_view(), name='models_detail'),
     path('<int:pk>/increment-downloads', increment_downloads, name='increment_downloads'),
     path('<int:pk>/like/add', add_like, name='add_like'),

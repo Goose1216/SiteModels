@@ -18,7 +18,7 @@
             <ul class="nav-links">
                 <li><a href="#">Главная</a></li>
                 <li><a href="{% url 'models_list' %}">Модели</a></li>
-                <li><a href="#">Загрузить</a></li>
+                <li><a href="{% url 'models_upload' %}">Загрузить</a></li>
             </ul>
             <div class="auth-buttons">
                 {% if user.is_authenticated %}

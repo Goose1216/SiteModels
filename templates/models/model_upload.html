@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Загрузка 3D модели{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/models/model_upload.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="upload-container">
+    <h1 class="upload-title">Загрузить 3D модель</h1>
+
+    <form method="post" enctype="multipart/form-data" class="upload-form">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group {% if field.errors %}has-error{% endif %}">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <div class="error-message">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="submit-button">Опубликовать модель</button>
+    </form>
+</div>
+{% endblock %}

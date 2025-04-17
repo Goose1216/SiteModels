@@ -1,9 +1,22 @@
 from .models import Model, Like, Comment
 from django.http import HttpResponseNotAllowed
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 
+from .forms import ModelForm
+
+class ModelUploadView(LoginRequiredMixin, CreateView):
+    model = Model
+    form_class = ModelForm
+    template_name = 'models/model_upload.html'
+    success_url = reverse_lazy('models_list')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 class ModelList(ListView):
    #paginate_by = 12

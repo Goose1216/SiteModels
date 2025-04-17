@@ -8,7 +8,7 @@ class Model(models.Model):
     name = models.TextField(max_length=30, verbose_name='Название', blank=True, null=True)
     description = models.TextField(max_length=500, verbose_name='Описание', blank=True, null=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор')
-    cnt_downloads = models.IntegerField(default=0, verbose_name='Количество загрузок')
+    cnt_downloads = models.IntegerField(default=0, verbose_name='Количество загрузок', blank=True)
 
     def __str__(self):
         return f"Модель {self.name} от {self.author}"
