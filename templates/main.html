@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}3D Model Gallery | 3DModelsHub{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="/static/css/models/model_list.css">
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/DRACOLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="model-gallery-container">
+        <h1 class="gallery-title">Самые популярные модели</h1>
+        <div class="model-grid">
+            {% for model in object_list  %}
+            <a href = '{% url 'models_detail' model.id %}'>
+                <div class="model-card" id="model-{{ model.id }}">
+                    {% if model.image %}
+                        <img src="{{ model.image.url }}" alt="{{ model.name }}" class="model-preview-image">
+                    {% else %}
+                        <div class="no-image-placeholder">No preview available</div>
+                    {% endif %}
+                    <div class="model-info">
+                        <span>{{ model.name }}</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+{% endblock %}

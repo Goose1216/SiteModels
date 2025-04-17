@@ -19,8 +19,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from models.views import ModelPopularList
+
 urlpatterns = [
         path('admin/', admin.site.urls),
+        path('', ModelPopularList.as_view(), name = 'home'),
         path('models/', include('models.urls')),
 
         path('users/', include('users.urls')),

@@ -2,6 +2,7 @@ from .models import Model, Like, Comment
 from django.http import HttpResponseNotAllowed
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
@@ -17,6 +18,15 @@ class ModelUploadView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class ModelPopularList(ListView):
+    model = Model
+    template_name = 'main.html'
+    queryset = Model.objects.annotate(
+        likes_count=Count('likes')
+    ).order_by("-likes_count")
+
 
 class ModelList(ListView):
     paginate_by = 9

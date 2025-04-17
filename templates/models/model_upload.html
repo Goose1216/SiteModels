@@ -14,20 +14,27 @@
     <form method="post" enctype="multipart/form-data" class="upload-form">
         {% csrf_token %}
 
-        {% for field in form %}
-            <div class="form-group {% if field.errors %}has-error{% endif %}">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
+        <div class="form-group">
+            <label for="id_name">Название модели</label>
+            <input type="text" id="id_name" name="name" maxlength="30" required>
+        </div>
 
-                {% if field.help_text %}
-                    <small>{{ field.help_text }}</small>
-                {% endif %}
+        <div class="form-group">
+            <label for="id_description">Описание</label>
+            <textarea id="id_description" name="description" maxlength="500" rows="4"></textarea>
+        </div>
 
-                {% for error in field.errors %}
-                    <div class="error-message">{{ error }}</div>
-                {% endfor %}
-            </div>
-        {% endfor %}
+        <div class="form-group file-upload">
+            <label for="id_file">Файл модели</label>
+            <input type="file" id="id_file" name="file" accept=".glb" required>
+            <small>Поддерживается только формат .glbF</small>
+        </div>
+
+        <div class="form-group file-upload">
+            <label for="id_image">Превью изображение</label>
+            <input type="file" id="id_image" name="image" accept="image/*">
+            <small>Рекомендуемый размер: 800x600px</small>
+        </div>
 
         <button type="submit" class="submit-button">Опубликовать модель</button>
     </form>
