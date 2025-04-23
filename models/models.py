@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 
 class Model(models.Model):
@@ -14,7 +15,7 @@ class Model(models.Model):
         return f"Модель {self.name} от {self.author}"
 
     def get_absolute_url(self):
-        pass
+        return reverse('models_detail', kwargs={'pk': self.id})
 
     def increment_downloads(self):
         self.cnt_downloads += 1

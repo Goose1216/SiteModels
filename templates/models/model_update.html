@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Update {{ model.name }} | 3DModelsHub{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="/static/css/models/model_update.css">
+{% endblock %}
+
+{% block content %}
+<div class="model-form-container">
+    <h1 class="form-title">Обновление модели</h1>
+
+    <form method="post" enctype="multipart/form-data" class="model-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">Название модели</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+                <div class="error-message">{{ form.name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.description.id_for_label }}">Описание</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="error-message">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+
+
+        <div class="form-group file-upload">
+            <label>Текущая 3д модель: {{ model.file.name }}</label>
+            <label for="{{ form.file.id_for_label }}" class="file-upload-label">
+                <span>Загрузить новый файл</span>
+                {{ form.file }}
+            </label>
+            {% if form.file.errors %}
+                <div class="error-message">{{ form.file.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group file-upload">
+            <label>Текущее изображение:</label>
+            {% if model.image %}
+                <img src="{{ model.image.url }}" alt="Current preview" class="current-image">
+            {% else %}
+                <p>Нет изображения</p>
+            {% endif %}
+            <label for="{{ form.image.id_for_label }}" class="file-upload-label">
+                <span>Загрузить новое изображение</span>
+                {{ form.image }}
+            </label>
+            {% if form.image.errors %}
+                <div class="error-message">{{ form.image.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">Обновить модель</button>
+            <a href="{% url 'models_detail' model.pk %}" class="cancel-btn">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete {{ model.name }} | 3DModelsHub{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="/static/css/models/model_delete.css">
+{% endblock %}
+
+{% block content %}
+<div class="delete-confirmation-container">
+    <h1 class="delete-title">Удаление модели</h1>
+
+    <div class="model-preview">
+        {% if model.image %}
+            <img src="{{ model.image.url }}" alt="{{ model.name }}" class="model-image">
+        {% endif %}
+        <h2 class="model-name">{{ model.name }}</h2>
+        <p class="model-stats">
+            <span>Скачиваний: {{ model.cnt_downloads }}</span>
+            <span>Лайков: {{ model.cnt_likes }}</span>
+        </p>
+    </div>
+
+    <p class="confirmation-message">
+        Вы уверены что хотите удалить эту модель? Это действие нельзя будет отменить.
+    </p>
+
+    <form method="post" class="delete-form">
+        {% csrf_token %}
+        <div class="form-actions">
+            <button type="submit" class="delete-btn">Удалить</button>
+            <button type="submit" name="cancel" class="cancel-btn">Отмена</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

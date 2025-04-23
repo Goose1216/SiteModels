@@ -71,9 +71,17 @@
         </div>
 
         <div class="model-actions">
-            <a href="{{ model.file.url }}" download class="download-btn" onclick="incrementDownloads()">
-                Скачать ({{ model.file.size|filesizeformat }})
-            </a>
+                <a href="{{ model.file.url }}" download class="download-btn" onclick="incrementDownloads()">
+                    Скачать ({{ model.file.size|filesizeformat }})
+                </a>
+                {% if user == model.author %}
+                     <a href="{% url 'models_update' model.pk %}" class="update-btn">
+                        Обновить
+                    </a>
+                    <a href="{% url 'models_delete' model.pk %}" class="delete-btn">
+                        Удалить
+                    </a>
+                {% endif %}
         </div>
 
     </div>

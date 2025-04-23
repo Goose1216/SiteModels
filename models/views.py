@@ -1,6 +1,6 @@
 from .models import Model, Like, Comment
 from django.http import HttpResponseNotAllowed
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -68,6 +68,32 @@ class ModelDetail(DetailView):
             context['commented'] = Comment.objects.filter(model=model, author=user).exists()
 
         return context
+
+
+class ModelUpdateView(LoginRequiredMixin, UpdateView):
+    model = Model
+    form_class = ModelForm
+    template_name = 'models/model_update.html'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(author__username=self.request.user)
+
+
+
+class ModelDeleteView(LoginRequiredMixin, DeleteView):
+    model = Model
+    template_name = 'models/model_delete.html'
+    success_url = reverse_lazy('models_list')
+
+    def get_queryset(self):
+        return super().get_queryset().filter(author=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            return redirect('models_detail', pk=self.get_object().pk)
+        return super().post(request, *args, **kwargs)
+
+
 
 def increment_downloads(request, pk):
     if request.method == "POST":
