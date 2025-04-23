@@ -23,7 +23,7 @@
             <div class="auth-buttons">
                 {% if user.is_authenticated %}
                     <div class="user-menu">
-                        <span>Привет, {{ user.username }}</span>
+                        <a href = "{% url "models_list" %}?author={{ user.username }}" class="link_user">Привет, {{ user.username }}</a>
                         <a href="{% url 'account_logout' %}" class="button">Выйти</a>
                     </div>
                 {% else %}

@@ -32,7 +32,23 @@ class ModelList(ListView):
     paginate_by = 9
     model = Model
     template_name = 'models/model_list.html'
-    queryset = Model.objects.all()
+
+    def get_queryset(self):
+        author = self.request.GET.get('author')
+        if author is None:
+            return Model.objects.all()
+        if author:
+            return Model.objects.filter(author__username=author).select_related('author')
+
+    def get_context_data(self, **kwargs):
+        author = self.request.GET.get('author')
+        context = super().get_context_data(**kwargs)
+
+        if author is None:
+            return context
+
+        context['author'] = author
+        return context
 
 
 class ModelDetail(DetailView):

@@ -16,7 +16,15 @@
 
 {% block content %}
     <div class="model-gallery-container">
-        <h1 class="gallery-title">3D Модели</h1>
+        <h1 class="gallery-title">
+
+
+            3D Модели
+
+            {% if author %}
+                автора {{ author }}
+            {% endif %}
+        </h1>
         <div class="model-grid">
             {% for model in object_list  %}
             <a href = '{% url 'models_detail' model.id %}'>

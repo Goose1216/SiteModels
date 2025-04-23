@@ -147,6 +147,16 @@ body {
     gap: 1rem;
 }
 
+.link_user {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.link_user:hover {
+    color: var(--accent-color);
+}
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;

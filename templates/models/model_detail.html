@@ -62,7 +62,7 @@
 
         <div class="model-author">
             <span class="author-label">Автор:</span>
-            <a href="#" class="author-name">{{ model.author.username }}</a>
+            <a href="{% url "models_list" %}?author={{ model.author.username }}" class="author-name">{{ model.author.username }}</a>
         </div>
 
         <div class="model-description">
